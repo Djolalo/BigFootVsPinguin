@@ -1,65 +1,81 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float moveSpeed; 
-    private Rigidbody rb;
-    [SerializeField] 
-    private float lowestAngle;
-    [SerializeField] 
-    private float highestAngle; 
-    [SerializeField] 
-    private float mouseSensitivity; 
-    [SerializeField]
-    GameObject cam; 
-    // Start is called before the first frame update
+    [Header("Settings")]
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float mouseSensitivity = 10f;
+    [SerializeField] private float lowestAngle = -90f;
+    [SerializeField] private float highestAngle = 90f;
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float jumpHeight = 2f;
+
+    private CharacterController controller;
+    private GameObject cam;
+    private Vector2 moveInput;
+    private float verticalRotation = 0f;
+    private float horizontalRotation = 0f;
+    private Vector3 playerVelocity;
+    private bool isGrounded;
+
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        cam = transform.Find("Main Camera").gameObject;
+        controller = GetComponent<CharacterController>();
+        if (cam == null) cam = GetComponentInChildren<Camera>().gameObject;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        isGrounded = controller.isGrounded;
+        if (isGrounded && playerVelocity.y < 0)
+        {
+            playerVelocity.y = -2f; // Petite force pour coller au sol
+        }
+
+        MovePlayer();
+        ApplyGravity();
+        LookAround();
     }
 
-    void OnMove(UnityEngine.InputSystem.InputValue inputVal)
+    void OnMove(InputValue inputVal)
     {
-        Vector2 inputVec = inputVal.Get<Vector2>(); 
-        this.rb.velocity =  new Vector3(inputVec.x,0,inputVec.y)* moveSpeed*10; 
+        moveInput = inputVal.Get<Vector2>();
     }
 
-    // Variables à déclarer en haut de classe
-    private float verticalRotation = 0f;
+    void OnJump(InputValue inputVal)
+    {
+        if (isGrounded)
+        {
+            playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+    }
 
-    void OnLook(UnityEngine.InputSystem.InputValue inputVal)
+    void OnLook(InputValue inputVal)
     {
         Vector2 mouseDelta = inputVal.Get<Vector2>();
-
-        // 1. Calcul de la rotation horizontale (Corps)
-        float rotationY = mouseDelta.x * mouseSensitivity*Time.deltaTime;
-
-        // 2. Calcul et Limitation de la rotation verticale (Regard)
-        // On soustrait souvent car l'axe Y de la souris est inversé par rapport à l'axe X de rotation
-        verticalRotation -= mouseDelta.y * mouseSensitivity* Time.deltaTime;
+        horizontalRotation += mouseDelta.x * mouseSensitivity * Time.deltaTime;
+        verticalRotation -= mouseDelta.y * mouseSensitivity * Time.deltaTime;
         verticalRotation = Mathf.Clamp(verticalRotation, lowestAngle, highestAngle);
-
-        // 3. Application
-        // Rotation horizontale appliquée au Rigidbody
-        Quaternion deltaRotation = Quaternion.Euler(0, rotationY, 0);
-        rb.MoveRotation(rb.rotation * deltaRotation);
-
-        // 4. Application verticale (sur la caméra directement) 
-        // Si ce script est sur la caméra, utilise localRotation
-        this.cam.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
-
     }
 
-    void OnAttack(UnityEngine.InputSystem.InputValue inputVal)
+    private void MovePlayer()
     {
+        Vector3 moveDir = transform.forward * moveInput.y + transform.right * moveInput.x;
+        controller.Move(moveDir * moveSpeed * Time.deltaTime);
+    }
+
+    private void ApplyGravity()
+    {
+        playerVelocity.y += gravity * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private void LookAround()
+    {
+        transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
+        cam.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 }
