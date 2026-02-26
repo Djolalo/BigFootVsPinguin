@@ -61,6 +61,11 @@ public class PlayerMovement : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, lowestAngle, highestAngle);
     }
 
+    void OnAttack(InputValue inputVal)
+    {
+        
+    }
+
     private void MovePlayer()
     {
         Vector3 moveDir = transform.forward * moveInput.y + transform.right * moveInput.x;
