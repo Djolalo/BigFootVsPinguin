@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float highestAngle = 90f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpHeight = 2f;
+    [Header("Miscellaneous")]
+    [SerializeField] private Animator animator;
+
 
     private CharacterController controller;
     private GameObject cam;
@@ -49,8 +52,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
+            animator.SetTrigger("jump");
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+        
     }
 
     void OnLook(InputValue inputVal)
@@ -63,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnAttack(InputValue inputVal)
     {
-        
+        animator.SetTrigger("attack");
     }
 
     private void MovePlayer()
