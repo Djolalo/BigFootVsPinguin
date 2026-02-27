@@ -51,7 +51,7 @@ CapsuleCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -74,6 +74,7 @@ MonoBehaviour:
   range_of_stranding: 50
   range_of_detection: 50.3
   bipolarTime: 5
+  range_of_diseaperance: 4
 --- !u!195 &-109539748528314407
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -118,31 +119,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.06
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.72
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.94
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.4537578
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.8911251
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -150,7 +151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -126.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

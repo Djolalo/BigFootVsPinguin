@@ -20,6 +20,9 @@ public class IglooBehavior : MonoBehaviour
 
     [SerializeField]
     private int nbSentinels;
+    
+    [SerializeField]
+    private Vector3 offset_entry = new Vector3(0,0,-5);
 
     private bool WaveAlreadyTriggered = false;
 
@@ -60,18 +63,18 @@ public class IglooBehavior : MonoBehaviour
 
     private void SpawnSentry()
     {
-        GameObject pingu = (GameObject)Instantiate(pingu_sentry, this.transform.position, this.transform.rotation);
+        GameObject pingu = (GameObject)Instantiate(pingu_sentry, this.transform.position + offset_entry, this.transform.rotation);
         PinguinBehavior pb = pingu.GetComponent<PinguinBehavior>();
-        pb.init(this.transform, this);
+        pb.Init(this.transform, this);
         pinguins.Add(pingu);
 
     }
 
     private void SpawnWarrior()
     {
-        GameObject pingu = (GameObject)Instantiate(pinguin_warriors, this.transform.position, this.transform.rotation);
+        GameObject pingu = (GameObject)Instantiate(pinguin_warriors, this.transform.position + offset_entry, this.transform.rotation);
         PinguinWarriorBehavior pb = pingu.GetComponent<PinguinWarriorBehavior>();
-        pb.init(this.transform, this);
+        pb.Init(this.transform, this);
         pinguins.Add(pingu);
 
     }
@@ -79,7 +82,6 @@ public class IglooBehavior : MonoBehaviour
     public void PinguinDied(GameObject pinguin)
     {
         if(pinguins.Contains(pinguin)) pinguins.Remove(pinguin);
-        Destroy(pinguin);
     }
 
     public void Wave()
