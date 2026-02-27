@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using TMPro;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -13,14 +15,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpHeight = 3f;
     [SerializeField] private float attack_range = 2f;
-    [SerializeField] private float MaxHP = 100;
+    [SerializeField] private float MaxHP = 100f;
     private float HP;
     private bool IsDead = false;
 
     [Header("Miscellaneous")]
     [SerializeField] private Animator animator;
-
-
+    [SerializeField] private TMP_Text uiCooldownText;
+    
+    [SerializeField] private Image progressBar;
+    [SerializeField] private Image JumpBackground;
+    
     private CharacterController controller;
     private GameObject frontCam;
     private Vector2 moveInput;
@@ -28,11 +33,17 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalRotation = 0f;
     private Vector3 playerVelocity;
     private bool isGrounded;
+
     public CameraController camCtrl;
     public Transform cameraTopPos;
 
     private bool canMove = false;
     
+    private float cooldown = 10f;
+    private float currentCooldown = 0f;
+    private string redJump = "#AE0000";
+    private string greenJump = "#299400";
+
 
     void Start()
     {
@@ -59,6 +70,43 @@ public class PlayerMovement : MonoBehaviour
             playerVelocity.y = -2f; // Petite force pour coller au sol
         }
 
+        //Jump cooldown         
+        if (currentCooldown > 0f){
+            currentCooldown -= Time.deltaTime;
+        }
+        
+        if(currentCooldown < 0f)
+        {
+            currentCooldown = 0f;
+        }
+
+        if(currentCooldown > 0f)
+        {
+            if (ColorUtility.TryParseHtmlString(redJump, out Color newColor))
+            {
+                if (JumpBackground)
+                    JumpBackground.color = newColor;
+            }
+            if (uiCooldownText)
+                uiCooldownText.text = currentCooldown.ToString("F0");
+        }
+        else
+        {
+            if (ColorUtility.TryParseHtmlString(greenJump, out Color newColor))
+            {
+                if (JumpBackground)
+                    JumpBackground.color = newColor;
+            }
+            if (uiCooldownText)
+                uiCooldownText.text = "";
+        }
+
+        //lifebar update
+        HP -= Time.deltaTime * 3f; 
+        float fillValue = HP / 100f;
+        if (progressBar)
+            progressBar.fillAmount = fillValue;
+        
         if (canMove)
         {
             MovePlayer();
@@ -89,16 +137,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded)
         {
-            animator.SetTrigger("jump");
-            playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            StartCoroutine(
-                camCtrl.JumpQTECamera(
-                    cameraTopPos,
-                    12f,  // Duration
-                    0.15f // Slowdown
-                )
-            );
-        }   
+            if (currentCooldown <= 0f)
+            {
+                animator.SetTrigger("jump");
+                playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                currentCooldown = cooldown;
+                StartCoroutine(
+                    camCtrl.JumpQTECamera(
+                        cameraTopPos,
+                        12f,  // Duration
+                        0.15f // Slowdown
+                    )
+                );
+            }
+        }
     }
 
     void OnLook(InputValue inputVal)
