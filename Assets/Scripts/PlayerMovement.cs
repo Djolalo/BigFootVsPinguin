@@ -16,17 +16,20 @@ public class PlayerMovement : MonoBehaviour
 
 
     private CharacterController controller;
-    private GameObject cam;
+    private GameObject frontCam;
     private Vector2 moveInput;
     private float verticalRotation = 0f;
     private float horizontalRotation = 0f;
     private Vector3 playerVelocity;
     private bool isGrounded;
+    public CameraController camCtrl;
+    public Transform cameraTopPos;
+    
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        if (cam == null) cam = GetComponentInChildren<Camera>().gameObject;
+        if (frontCam == null) frontCam = GetComponentInChildren<Camera>().gameObject;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -63,6 +66,13 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetTrigger("jump");
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            StartCoroutine(
+                camCtrl.JumpQTECamera(
+                    cameraTopPos,
+                    10f,
+                    0.15f
+                )
+            );
         }
         
     }
@@ -95,6 +105,6 @@ public class PlayerMovement : MonoBehaviour
     private void LookAround()
     {
         transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
-        cam.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        frontCam.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 }
