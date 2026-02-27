@@ -74,6 +74,7 @@ MonoBehaviour:
   range_of_stranding: 50
   range_of_detection: 50.3
   bipolarTime: 5
+  range_of_diseaperance: 4
 --- !u!195 &-109539748528314407
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -130,19 +131,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.4537578
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.8911251
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -150,7 +151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -126.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83418f61a016f488e8d09f98b36cb79f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

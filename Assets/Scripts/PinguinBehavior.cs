@@ -60,7 +60,7 @@ public class PinguinBehavior : MonoBehaviour
                 m_agent.isStopped = false;
                 m_agent.destination = iglooT.position;
                 triggeredDetection = true;
-
+                transform.LookAt(iglooT);
             }
         }
         else
@@ -78,13 +78,14 @@ public class PinguinBehavior : MonoBehaviour
         float random_x = Random.Range(-1f,1f)*Mathf.PI;
         Vector3 new_targ_pos = new Vector3(iglooT.position.x + range_of_stranding * Mathf.Cos(random_x),iglooT.position.y,iglooT.position.z + range_of_stranding * Mathf.Sin(random_x));
         m_agent.destination = new_targ_pos;
+        transform.LookAt(new_targ_pos);
     }
 
     public void DiedPinguin()
     {
         isDead = true;
         m_agent.isStopped = true;
-        iglooBehavior.PinguinDied();
+        //iglooBehavior.PinguinDied();
         //faire le ragdoll
     }
 }

@@ -29,6 +29,7 @@ public class PinguinWarriorBehavior : MonoBehaviour
     {
         if(isDead) return;
 
+        transform.LookAt(targetT);
         float distance = Vector3.Distance(targetT.position, transform.position);
         
         if(distance <= attack_distance)
@@ -52,7 +53,7 @@ public class PinguinWarriorBehavior : MonoBehaviour
     {
         isDead = true;
         m_agent.isStopped = true;
-        iglooBehavior.PinguinDied();
+        //iglooBehavior.PinguinDied();
         //faire le ragdoll
     }
 
