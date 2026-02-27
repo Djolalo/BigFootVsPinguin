@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float highestAngle = 90f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpHeight = 2f;
+    [SerializeField] private float attack_range = 2f;
+    [SerializeField] private float MaxHP = 100;
+    private float HP;
+    private bool IsDead = false;
     [Header("Miscellaneous")]
     [SerializeField] private Animator animator;
 
@@ -28,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         if (cam == null) cam = GetComponentInChildren<Camera>().gameObject;
         Cursor.lockState = CursorLockMode.Locked;
+        HP = MaxHP;
     }
 
     void Update()
@@ -78,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
     void OnAttack(InputValue inputVal)
     {
         animator.SetTrigger("attack");
+        //si les pinguins sont à la portées d'attaque du yeti, les tuers.
     }
 
     private void MovePlayer()
@@ -96,5 +102,24 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
         cam.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+    }
+
+    public void IsAttack(float damage)
+    {
+        HP -= damage;
+        if(HP % 10 == 0 && HP != MaxHP)
+        {
+            animator.SetTrigger("damage");
+        }
+        if(HP <= 0)
+        {
+            DeadPlayer();
+        }
+    }
+
+    private void DeadPlayer()
+    {
+        IsDead = true;
+        animator.SetBool("dead", true);
     }
 }
