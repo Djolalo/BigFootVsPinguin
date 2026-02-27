@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pinguin_warriors: {fileID: 1804188980352547251, guid: a263a6a8fc6d44acdb9fa5965ca13684, type: 3}
   pingu_sentry: {fileID: 974979247457184002, guid: e4ee1146d8b10475996eb152c202f186, type: 3}
-  firecamp_prefab: {fileID: 0}
+  firecamp_prefab: {fileID: 2600768612107297850, guid: 885ae13d0324ceaa891559a26ea25e93, type: 3}
   nb_vague: 3
   nb_max_vague: 8
   nbSentinels: 17

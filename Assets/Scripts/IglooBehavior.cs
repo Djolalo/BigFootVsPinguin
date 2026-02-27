@@ -40,7 +40,7 @@ public class IglooBehavior : MonoBehaviour
         if(pinguins == null) return;
         if(IsDestroyed && pinguins.Count == 0)
         {
-            Destroy(this.transform.parent);
+            Destroy(gameObject);
         }
         if(IsDestroyed) return;
 
@@ -97,8 +97,7 @@ public class IglooBehavior : MonoBehaviour
     public void Destroyed()
     {
         IsDestroyed = true;
-        transform.Translate(new Vector3(0,-20,0));
+        this.gameObject.SetActive(false);
         GameObject firecamp = (GameObject)Instantiate(firecamp_prefab,this.transform.position, this.transform.rotation);
-        firecamp.transform.Translate(new Vector3(0,20,0));
     }
 }
