@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -29,14 +30,25 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     public CameraController camCtrl;
     public Transform cameraTopPos;
+
+    private bool canMove = false;
     
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        if (frontCam == null) frontCam = GetComponentInChildren<Camera>().gameObject;
+        if (frontCam == null) frontCam = GameObject.Find("CameraYeti").gameObject;
         Cursor.lockState = CursorLockMode.Locked;
         HP = MaxHP;
+
+        // Bloquer les inputs 5 secondes au démarrage
+        StartCoroutine(EnableInputAfterDelay(5f));
+    }
+
+    private IEnumerator EnableInputAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canMove = true;
     }
 
     void Update()
@@ -47,13 +59,18 @@ public class PlayerMovement : MonoBehaviour
             playerVelocity.y = -2f; // Petite force pour coller au sol
         }
 
-        MovePlayer();
+        if (canMove)
+        {
+            MovePlayer();
+            LookAround();
+        }
         ApplyGravity();
-        LookAround();
     }
 
     void OnMove(InputValue inputVal)
     {
+        if (!canMove) return;
+
         moveInput = inputVal.Get<Vector2>();
 
         if (moveInput == Vector2.zero)
@@ -68,6 +85,8 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue inputVal)
     {
+        if (!canMove) return;
+
         if (isGrounded)
         {
             animator.SetTrigger("jump");
@@ -84,6 +103,8 @@ public class PlayerMovement : MonoBehaviour
 
     void OnLook(InputValue inputVal)
     {
+        if (!canMove) return;
+
         Vector2 mouseDelta = inputVal.Get<Vector2>();
         horizontalRotation += mouseDelta.x * mouseSensitivity * Time.deltaTime;
         verticalRotation -= mouseDelta.y * mouseSensitivity * Time.deltaTime;
@@ -92,6 +113,8 @@ public class PlayerMovement : MonoBehaviour
 
     void OnAttack(InputValue inputVal)
     {
+        if (!canMove) return;
+        
         animator.SetTrigger("attack");
         //si les pinguins sont à la portées d'attaque du yeti, les tuers.
     }
