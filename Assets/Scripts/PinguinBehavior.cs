@@ -1,18 +1,14 @@
 using UnityEngine;
-
 public class PinguinBehavior : MonoBehaviour
 {  
     private UnityEngine.AI.NavMeshAgent m_agent;
     [SerializeField]
     private float attack_distance;
     private Rigidbody rb;
-    
+
     private Transform iglooT;
     private Transform targetT;
-
     private IglooBehavior iglooBehavior; 
-
-
     private float last_chrono;
     [SerializeField]
     private float range_of_stranding;
@@ -38,14 +34,11 @@ public class PinguinBehavior : MonoBehaviour
         rb.isKinematic = true;
         UpdateTarget();
     }
-
     public void Init(Transform iglooT,  IglooBehavior iglooBehavior)
     {
         this.iglooT = iglooT; 
         this.iglooBehavior = iglooBehavior;
     }
-
-
     // Update is called once per frame
     void Update()
     {
@@ -77,7 +70,6 @@ public class PinguinBehavior : MonoBehaviour
         }
         
     }
-
     private void UpdateTarget()
     {
         float random_x = Random.Range(-1f,1f)*Mathf.PI;
@@ -93,6 +85,8 @@ public class PinguinBehavior : MonoBehaviour
 
         // Stop IA
         m_agent.isStopped = true;
+        //iglooBehavior.PinguinDied();
+        //faire le ragdoll
         m_agent.enabled = false;
 
         // Activer la physique

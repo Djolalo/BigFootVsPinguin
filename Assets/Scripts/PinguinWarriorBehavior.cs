@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class PinguinWarriorBehavior : MonoBehaviour
 {  
     private UnityEngine.AI.NavMeshAgent m_agent;
@@ -13,14 +12,11 @@ public class PinguinWarriorBehavior : MonoBehaviour
     [SerializeField] private float upwardForce = 2f;
 
     private GameObject m_script;
-    
+
     private Transform iglooT;
     private Transform targetT;
-
     private bool isDead = false;
-
     [SerializeField] private float attack_damage = 1;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +30,6 @@ public class PinguinWarriorBehavior : MonoBehaviour
     void Update()
     {
         if(isDead) return;
-
         transform.LookAt(targetT);
         float distance = Vector3.Distance(targetT.position, transform.position);
         
@@ -48,7 +43,6 @@ public class PinguinWarriorBehavior : MonoBehaviour
             m_agent.SetDestination(targetT.position);
         }
     }
-
     public void Init(Transform iglooT, IglooBehavior iglooBehavior)
     {
         this.iglooT = iglooT;
@@ -62,6 +56,8 @@ public class PinguinWarriorBehavior : MonoBehaviour
 
         // Stop IA
         m_agent.isStopped = true;
+        //iglooBehavior.PinguinDied();
+        //faire le ragdoll
         m_agent.enabled = false;
 
         // Activer la physique
