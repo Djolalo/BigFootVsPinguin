@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField] private float MaxHP = 100f;
     [SerializeField] private Image progressBar;
+    [SerializeField] private Image JumpBackground;
 
     
     
@@ -34,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     private float cooldown = 10f;
     private float currentCooldown = 0f;
     private float HP = 1f;
+    private string redJump = "#AE0000";
+    private string greenJump = "#299400";
 
     void Start()
     {
@@ -55,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (currentCooldown > 0f){
             currentCooldown -= Time.deltaTime;
+            
         }
         
         if(currentCooldown < 0f)
@@ -64,13 +68,19 @@ public class PlayerMovement : MonoBehaviour
 
         if(currentCooldown > 0f)
         {
-                uiCooldownText.text = currentCooldown.ToString("F0");
+            if (ColorUtility.TryParseHtmlString(redJump, out Color newColor)){
+                JumpBackground.color = newColor;
+            }
+            uiCooldownText.text = currentCooldown.ToString("F0");
         }else{
+            if (ColorUtility.TryParseHtmlString(greenJump, out Color newColor)){
+                JumpBackground.color = newColor;
+            }
             uiCooldownText.text = "";
         }
 
         //lifebar update
-        HP -= Time.deltaTime * 1f; 
+        HP -= Time.deltaTime * 3f; 
         float fillValue = HP/100f;
         progressBar.fillAmount = fillValue;
         
@@ -103,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("jump");
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 currentCooldown = cooldown;
+                
             }
         }
         

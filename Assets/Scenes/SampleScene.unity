@@ -5170,6 +5170,7 @@ MonoBehaviour:
   uiCooldownText: {fileID: 564205641}
   MaxHP: 100
   progressBar: {fileID: 1159686327}
+  JumpBackground: {fileID: 0}
 --- !u!114 &246894857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10679,7 +10680,7 @@ GameObject:
   - component: {fileID: 704084360}
   - component: {fileID: 704084359}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10703,7 +10704,7 @@ RectTransform:
   - {fileID: 1308358251}
   - {fileID: 1270790119}
   - {fileID: 564205640}
-  m_Father: {fileID: 1779625751}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11607,7 +11608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6830188, g: 0, b: 0, a: 0.76862746}
+  m_Color: {r: 0.15734246, g: 0.5773585, b: 0, a: 0.76862746}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12236,7 +12237,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 246894853}
-  - {fileID: 704084358}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1841458653
@@ -12604,7 +12604,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 120, y: -20}
-  m_SizeDelta: {x: 205, y: 25}
+  m_SizeDelta: {x: 180, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2059827569
 MonoBehaviour:
@@ -12627,7 +12627,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -12934,6 +12934,7 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1317231958}
   - {fileID: 507274575}
+  - {fileID: 704084358}
   - {fileID: 1120625026}
   - {fileID: 1779625751}
   - {fileID: 8894270053150244923}
