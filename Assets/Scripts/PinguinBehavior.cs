@@ -34,6 +34,8 @@ public class PinguinBehavior : MonoBehaviour
         m_agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         last_chrono = Time.time;
         this.targetT = GameObject.FindWithTag("Player").transform;
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
         UpdateTarget();
     }
 
