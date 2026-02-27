@@ -12,7 +12,7 @@ public class IglooBehavior : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     private int nb_vague = 0;
-    [SerializeField] int nb_max_vague = 8;
+    [SerializeField] int nb_max_vague = 4;
     private int nb_pinguin = 8;
     private bool SendWave = false;
     [SerializeField]
@@ -50,7 +50,7 @@ public class IglooBehavior : MonoBehaviour
         {
             //UnityEngine.Debug.Log("Spawning");
             int i = 0;
-            nb_pinguin = (nb_vague == 0 )? nb_pinguin: nb_pinguin << 1;
+            nb_pinguin = (nb_vague == 0) ? nb_pinguin : Mathf.Min(nb_pinguin * 2, 100);
             while( i++ < nb_pinguin)
             {
                 SpawnWarrior();
@@ -97,7 +97,10 @@ public class IglooBehavior : MonoBehaviour
     public void Destroyed()
     {
         IsDestroyed = true;
+        Debug.Log("deactivate igloo");
         this.gameObject.SetActive(false);
+        Debug.Log("create fire");
         GameObject firecamp = (GameObject)Instantiate(firecamp_prefab,this.transform.position, this.transform.rotation);
+        Debug.Log("done");
     }
 }

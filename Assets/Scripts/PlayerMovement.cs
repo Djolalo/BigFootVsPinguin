@@ -139,27 +139,39 @@ public class PlayerMovement : MonoBehaviour
 
     void OnJump(InputValue inputVal)
     {
-        if (!canMove) return;
+        if (!canMove || !isGrounded || currentCooldown > 0f) return;
 
-        if (isGrounded)
-        {
-            if (currentCooldown <= 0f)
-            {
-                animator.SetTrigger("jump");
-                playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                isGrounded = false; 
-                currentCooldown = cooldown;
-                StartCoroutine(Counter());
-                StartCoroutine(
-                    camCtrl.JumpQTECamera(
-                        cameraTopPos,
-                        12f,  // Duration
-                        0.15f // Slowdown
-                    )
-                );
-                
-            }
-        }
+        animator.SetTrigger("jump");
+        playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        isGrounded = false;
+        currentCooldown = cooldown;
+
+        StartCoroutine(WaitForJumpState());
+    }
+
+    IEnumerator WaitForJumpState()
+    {
+        // attendre que l'Animator entre vraiment dans l'état "Jump"
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            yield return null;
+
+        // ici l'animation Jump est active
+        StartCoroutine(JumpAttack());
+        StartCoroutine(
+            camCtrl.JumpQTECamera(
+                cameraTopPos,
+                10f,  //Duration
+                0.15f //Slow
+            )
+        );
+    }
+
+    IEnumerator JumpAttack()
+    {
+        yield return new WaitForSeconds(1.0f);
+        jumpAttackZone.SetActive(true);
+        yield return new WaitForSeconds(0.4f);
+        jumpAttackZone.SetActive(false);
     }
 
     void OnLook(InputValue inputVal)
@@ -175,10 +187,16 @@ public class PlayerMovement : MonoBehaviour
     void OnAttack(InputValue inputVal)
     {
         if (!canMove) return;
-        
+
         animator.SetTrigger("attack");
-        //canAttack = false; 
-        
+        StartCoroutine(AttackCoroutine());
+    }
+
+    IEnumerator AttackCoroutine()
+    {
+        attackZone.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        attackZone.SetActive(false);
     }
 
     private void MovePlayer()
@@ -207,30 +225,10 @@ public class PlayerMovement : MonoBehaviour
             DeadPlayer();
         }
     }
-    /*
-    public void ActivateHitbox()
-    {
-        attackZone.SetActive(true);
-    }
 
-    public void DeactivateHitbox()
-    {
-        attackZone.SetActive(false);
-    }
-    */
     private void DeadPlayer()
     {
         IsDead = true;
         animator.SetBool("dead", true);
-    }
-
-    IEnumerator Counter()
-    {
-        attackZone.SetActive(false);
-        yield return new WaitForSeconds(0.8f);
-        jumpAttackZone.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        jumpAttackZone.SetActive(false);
-        attackZone.SetActive(true);
     }
 }
