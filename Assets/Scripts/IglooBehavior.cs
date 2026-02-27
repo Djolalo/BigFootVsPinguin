@@ -4,15 +4,20 @@ using UnityEngine;
 public class IglooBehavior : MonoBehaviour
 {
 
-    public GameObject pinguin_warriors;
+    [SerializeField] private GameObject pinguin_warriors;
 
     private List<GameObject> pinguins = new List<GameObject>();
     [SerializeField]
-    private GameObject pingu_sentry; 
+    private GameObject pingu_sentry;
+    
+    [SerializeField]
+    private GameObject firecamp_prefab;
 
     // Start is called before the first frame update
     [SerializeField]
     private int nb_vague = 0;
+
+    [SerializeField] int nb_max_vague = 8;
 
     private int nb_pinguin = 8;
 
@@ -25,6 +30,8 @@ public class IglooBehavior : MonoBehaviour
     private Vector3 offset_entry = new Vector3(0,0,-5);
 
     private bool WaveAlreadyTriggered = false;
+
+    private bool IsDestroyed = false;
 
     void Awake()
     {
@@ -42,6 +49,11 @@ public class IglooBehavior : MonoBehaviour
     void Update()
     { 
         if(pinguins == null) return;
+        if(IsDestroyed && pinguins.Count == 0)
+        {
+            Destroy(this.transform.parent);
+        }
+        if(IsDestroyed) return;
 
         // Uni tyEngine.Debug.Log(pinguins.Count);
         if (SendWave && pinguins.Count == 0)
@@ -53,7 +65,7 @@ public class IglooBehavior : MonoBehaviour
                 SpawnWarrior();
             }
             nb_vague ++;
-            if(nb_vague > 3)
+            if(nb_vague > nb_max_vague)
             {
                 SendWave = false;
                 nb_vague = 0;
@@ -96,6 +108,15 @@ public class IglooBehavior : MonoBehaviour
             pinguins.Clear();
             SendWave = true;
         }
+
+    }
+
+    public void Destroyed()
+    {
+        IsDestroyed = true;
+        transform.Translate(new Vector3(0,-20,0));
+        GameObject firecamp = (GameObject)Instantiate(firecamp_prefab,this.transform.position, this.transform.rotation);
+        firecamp.transform.Translate(new Vector3(0,20,0));
 
     }
 }

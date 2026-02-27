@@ -209,6 +209,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 507274575}
     m_Modifications:
     - target: {fileID: 1260141586425543695, guid: 9405b7cf6f2384cc29133a619125aea8, type: 3}
+      propertyPath: nb_vague
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1260141586425543695, guid: 9405b7cf6f2384cc29133a619125aea8, type: 3}
       propertyPath: nbSentinels
       value: 3
       objectReference: {fileID: 0}
@@ -344,7 +348,11 @@ MonoBehaviour:
   highestAngle: 30
   gravity: -9.81
   jumpHeight: 2
+  attack_range: 2
+  MaxHP: 100
   animator: {fileID: 246894854}
+  WaveAttack: {fileID: 0}
+  ConeAttack: {fileID: 0}
 --- !u!114 &246894857
 MonoBehaviour:
   m_ObjectHideFlags: 0

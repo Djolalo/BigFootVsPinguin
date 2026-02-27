@@ -6,7 +6,7 @@ public class PinguinWarriorBehavior : MonoBehaviour
 
      private IglooBehavior iglooBehavior; 
 
-    [SerializeField] private float attack_distance = 2f;
+    [SerializeField] private float attack_distance = 3f;
 
     private GameObject m_script;
     

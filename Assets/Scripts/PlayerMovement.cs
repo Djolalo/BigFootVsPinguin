@@ -107,10 +107,6 @@ public class PlayerMovement : MonoBehaviour
     public void IsAttack(float damage)
     {
         HP -= damage;
-        if(HP % 10 == 0 && HP != MaxHP)
-        {
-            animator.SetTrigger("damage");
-        }
         if(HP <= 0)
         {
             DeadPlayer();
