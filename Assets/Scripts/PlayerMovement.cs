@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float lowestAngle = -90f;
     [SerializeField] private float highestAngle = 90f;
     [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private float jumpHeight = 2f;
+    [SerializeField] private float jumpHeight = 3f;
     [Header("Miscellaneous")]
     [SerializeField] private Animator animator;
 
@@ -69,8 +69,8 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(
                 camCtrl.JumpQTECamera(
                     cameraTopPos,
-                    10f,
-                    0.15f
+                    10f,  // Duration
+                    0.15f // Slowdown
                 )
             );
         }

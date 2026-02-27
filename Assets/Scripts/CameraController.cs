@@ -72,7 +72,7 @@ public class CameraController : MonoBehaviour
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         // Aller vers caméra QTE
-        yield return CameraTransition(qteTarget, 0.4f);
+        yield return CameraTransition(qteTarget, 0.2f);
 
         // Pause dramatique (temps réel)
         yield return new WaitForSecondsRealtime(holdTime);
