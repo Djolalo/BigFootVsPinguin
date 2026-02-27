@@ -14,8 +14,6 @@ public class RotationSnowParticle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(initialRotation);
-        print("local rotation : " + transform.localRotation);
         transform.rotation = initialRotation;
     }
 }

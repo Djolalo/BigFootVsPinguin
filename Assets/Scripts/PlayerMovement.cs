@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -13,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
     [Header("Miscellaneous")]
     [SerializeField] private Animator animator;
+    [SerializeField] private TMP_Text uiCooldownText;
+    
+    
 
 
     private CharacterController controller;
@@ -22,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalRotation = 0f;
     private Vector3 playerVelocity;
     private bool isGrounded;
+    private float cooldown = 10f;
+    private float currentCooldown = 0f;
 
     void Start()
     {
@@ -37,6 +43,25 @@ public class PlayerMovement : MonoBehaviour
         {
             playerVelocity.y = -2f; // Petite force pour coller au sol
         }
+
+        //Jump cooldown 
+        
+            if (currentCooldown > 0f){
+                currentCooldown -= Time.deltaTime;
+            }
+            
+            if(currentCooldown < 0f)
+            {
+                currentCooldown = 0f;
+            }
+
+            if(currentCooldown > 0f)
+            {
+                    uiCooldownText.text = currentCooldown.ToString("F0");
+
+            }else{
+                uiCooldownText.text = "";
+            }
 
         MovePlayer();
         ApplyGravity();
@@ -61,8 +86,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            animator.SetTrigger("jump");
-            playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            if (currentCooldown <= 0f)
+            {
+                animator.SetTrigger("jump");
+                playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                currentCooldown = cooldown;
+            }
         }
         
     }
