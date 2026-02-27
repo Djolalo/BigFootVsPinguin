@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -16,9 +17,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private TMP_Text uiCooldownText;
     
+    [SerializeField] private float MaxHP = 100f;
+    [SerializeField] private Image progressBar;
+
+    
     
 
-
+    
     private CharacterController controller;
     private GameObject cam;
     private Vector2 moveInput;
@@ -28,12 +33,14 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private float cooldown = 10f;
     private float currentCooldown = 0f;
+    private float HP = 1f;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         if (cam == null) cam = GetComponentInChildren<Camera>().gameObject;
         Cursor.lockState = CursorLockMode.Locked;
+        HP = MaxHP;
     }
 
     void Update()
@@ -46,22 +53,27 @@ public class PlayerMovement : MonoBehaviour
 
         //Jump cooldown 
         
-            if (currentCooldown > 0f){
-                currentCooldown -= Time.deltaTime;
-            }
-            
-            if(currentCooldown < 0f)
-            {
-                currentCooldown = 0f;
-            }
+        if (currentCooldown > 0f){
+            currentCooldown -= Time.deltaTime;
+        }
+        
+        if(currentCooldown < 0f)
+        {
+            currentCooldown = 0f;
+        }
 
-            if(currentCooldown > 0f)
-            {
-                    uiCooldownText.text = currentCooldown.ToString("F0");
+        if(currentCooldown > 0f)
+        {
+                uiCooldownText.text = currentCooldown.ToString("F0");
+        }else{
+            uiCooldownText.text = "";
+        }
 
-            }else{
-                uiCooldownText.text = "";
-            }
+        //lifebar update
+        HP -= Time.deltaTime * 1f; 
+        float fillValue = HP/100f;
+        progressBar.fillAmount = fillValue;
+        
 
         MovePlayer();
         ApplyGravity();
