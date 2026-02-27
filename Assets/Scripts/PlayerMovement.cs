@@ -46,6 +46,15 @@ public class PlayerMovement : MonoBehaviour
     void OnMove(InputValue inputVal)
     {
         moveInput = inputVal.Get<Vector2>();
+
+        if (moveInput == Vector2.zero)
+        {
+            animator.SetFloat("speed", 0);    
+        }
+        else
+        {
+            animator.SetFloat("speed", 1);
+        }
     }
 
     void OnJump(InputValue inputVal)
