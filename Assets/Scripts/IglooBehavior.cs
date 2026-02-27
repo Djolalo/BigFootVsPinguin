@@ -45,10 +45,10 @@ public class IglooBehavior : MonoBehaviour
         if(IsDestroyed) return;
 
         // Uni tyEngine.Debug.Log(pinguins.Count);
-        UnityEngine.Debug.Log(pinguins.Count +" , " + SendWave);
+        //UnityEngine.Debug.Log(pinguins.Count +" , " + SendWave);
         if (SendWave && pinguins.Count == 0)
         {
-            UnityEngine.Debug.Log("Spawning");
+            //UnityEngine.Debug.Log("Spawning");
             int i = 0;
             nb_pinguin = (nb_vague == 0 )? nb_pinguin: nb_pinguin << 1;
             while( i++ < nb_pinguin)

@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject coneAttack;
     [SerializeField] private GameObject jumpAttack; 
     [SerializeField] private GameObject attackZone;
+    [SerializeField] private GameObject jumpAttackZone;
 
     private CharacterController controller;
     private GameObject frontCam;
@@ -148,6 +149,7 @@ public class PlayerMovement : MonoBehaviour
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 isGrounded = false; 
                 currentCooldown = cooldown;
+                StartCoroutine(Counter());
                 StartCoroutine(
                     camCtrl.JumpQTECamera(
                         cameraTopPos,
@@ -155,6 +157,7 @@ public class PlayerMovement : MonoBehaviour
                         0.15f // Slowdown
                     )
                 );
+                
             }
         }
     }
@@ -219,5 +222,15 @@ public class PlayerMovement : MonoBehaviour
     {
         IsDead = true;
         animator.SetBool("dead", true);
+    }
+
+    IEnumerator Counter()
+    {
+        attackZone.SetActive(false);
+        yield return new WaitForSeconds(0.8f);
+        jumpAttackZone.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        jumpAttackZone.SetActive(false);
+        attackZone.SetActive(true);
     }
 }
