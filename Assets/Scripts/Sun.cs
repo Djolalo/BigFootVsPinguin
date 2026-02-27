@@ -6,7 +6,8 @@ public class DayNightCycle : MonoBehaviour
 {
     [Header("Sun Settings")]
     public Light sun;                 // Directional Light de la scène
-    public float dayDuration = 120f;  // Durée d'une journée complète en secondes
+    public float dayDuration = 300f;  // Durée d'une journée complète en secondes
+    public float currentTime = 280f;
     public float maxSunIntensity = 1f;
     public float minSunIntensity = 0f;
     [Range(0f, 360f)]
@@ -17,7 +18,6 @@ public class DayNightCycle : MonoBehaviour
     public Color dayAmbientColor = Color.white;
     public Color nightAmbientColor = Color.black;
 
-    private float currentTime = 0f;
 
     void Update()
     {

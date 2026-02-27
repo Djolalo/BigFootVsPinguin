@@ -5875,6 +5875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sun: {fileID: 705507994}
   dayDuration: 300
+  currentTime: 280
   maxSunIntensity: 0.8
   minSunIntensity: 0.01
   noonAngle: 42
@@ -7456,7 +7457,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5956184868213264567, guid: a263a6a8fc6d44acdb9fa5965ca13684, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a263a6a8fc6d44acdb9fa5965ca13684, type: 3}
