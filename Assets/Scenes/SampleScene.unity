@@ -5170,7 +5170,7 @@ MonoBehaviour:
   uiCooldownText: {fileID: 564205641}
   MaxHP: 100
   progressBar: {fileID: 1159686327}
-  JumpBackground: {fileID: 0}
+  JumpBackground: {fileID: 1308358252}
 --- !u!114 &246894857
 MonoBehaviour:
   m_ObjectHideFlags: 0
