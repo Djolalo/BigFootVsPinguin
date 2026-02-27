@@ -5,8 +5,12 @@ public class PinguinWarriorBehavior : MonoBehaviour
     private UnityEngine.AI.NavMeshAgent m_agent;
 
      private IglooBehavior iglooBehavior; 
+     private Rigidbody rb;
 
-    [SerializeField] private float attack_distance = 2f;
+    [SerializeField] private float attack_distance = 3f;
+
+    [SerializeField] private float deathForce = 1f;
+    [SerializeField] private float upwardForce = 2f;
 
     private GameObject m_script;
     
@@ -22,6 +26,8 @@ public class PinguinWarriorBehavior : MonoBehaviour
     {
         m_agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         this.targetT = GameObject.FindWithTag("Player").transform;
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
     }
 
     // Update is called once per frame
@@ -49,12 +55,31 @@ public class PinguinWarriorBehavior : MonoBehaviour
         this.iglooBehavior = iglooBehavior;
     }
 
-    public void DiedPinguin()
+    public void Die(Vector3 hitDirection)
     {
+        if (isDead) return;
         isDead = true;
+
+        // Stop IA
         m_agent.isStopped = true;
-        //iglooBehavior.PinguinDied();
-        //faire le ragdoll
+        m_agent.enabled = false;
+
+        // Activer la physique
+        rb.isKinematic = false;
+
+        // Optionnel : désactiver collider si tu veux éviter bug
+        // col.enabled = false;
+        iglooBehavior.PinguinDied(this.gameObject);
+
+        // Appliquer projection
+        Vector3 force = (hitDirection.normalized * deathForce) + (Vector3.up * upwardForce);
+        rb.AddForce(force, ForceMode.Impulse);
+
+        // Rotation aléatoire pour effet dramatique
+        rb.AddTorque(Random.insideUnitSphere * 10f, ForceMode.Impulse);
+
+        // Détruire après 3 secondes
+        //Destroy(gameObject, 3f);
     }
 
     public void Attack()

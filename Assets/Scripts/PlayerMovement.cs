@@ -22,10 +22,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Miscellaneous")]
     [SerializeField] private Animator animator;
     [SerializeField] private TMP_Text uiCooldownText;
-    
     [SerializeField] private Image progressBar;
     [SerializeField] private Image JumpBackground;
-    
+
+    [SerializeField] private GameObject coneAttack;
+    [SerializeField] private GameObject jumpAttack; 
+    [SerializeField] private GameObject attackZone;
+
     private CharacterController controller;
     private GameObject frontCam;
     private Vector2 moveInput;
@@ -44,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
     private string redJump = "#AE0000";
     private string greenJump = "#299400";
 
+
+    private bool canAttack = true; 
 
     void Start()
     {
@@ -141,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 animator.SetTrigger("jump");
                 playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                isGrounded = false; 
                 currentCooldown = cooldown;
                 StartCoroutine(
                     camCtrl.JumpQTECamera(
@@ -168,7 +174,8 @@ public class PlayerMovement : MonoBehaviour
         if (!canMove) return;
         
         animator.SetTrigger("attack");
-        //si les pinguins sont à la portées d'attaque du yeti, les tuers.
+        //canAttack = false; 
+        
     }
 
     private void MovePlayer()
@@ -192,16 +199,22 @@ public class PlayerMovement : MonoBehaviour
     public void IsAttack(float damage)
     {
         HP -= damage;
-        if(HP % 10 == 0 && HP != MaxHP)
-        {
-            animator.SetTrigger("damage");
-        }
         if(HP <= 0)
         {
             DeadPlayer();
         }
     }
+    /*
+    public void ActivateHitbox()
+    {
+        attackZone.SetActive(true);
+    }
 
+    public void DeactivateHitbox()
+    {
+        attackZone.SetActive(false);
+    }
+    */
     private void DeadPlayer()
     {
         IsDead = true;

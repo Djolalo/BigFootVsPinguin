@@ -5,6 +5,7 @@ public class PinguinBehavior : MonoBehaviour
     private UnityEngine.AI.NavMeshAgent m_agent;
     [SerializeField]
     private float attack_distance;
+    private Rigidbody rb;
     
     private Transform iglooT;
     private Transform targetT;
@@ -21,6 +22,8 @@ public class PinguinBehavior : MonoBehaviour
     private float bipolarTime;
     [SerializeField]
     private float range_of_diseaperance;
+    [SerializeField] private float deathForce = 15f;
+    [SerializeField] private float upwardForce = 8f;
 
     private bool triggeredDetection = false;
 
@@ -81,11 +84,31 @@ public class PinguinBehavior : MonoBehaviour
         transform.LookAt(new_targ_pos);
     }
 
-    public void DiedPinguin()
+    public void Die(Vector3 hitDirection)
     {
+        if (isDead) return;
         isDead = true;
+
+        // Stop IA
         m_agent.isStopped = true;
-        //iglooBehavior.PinguinDied();
-        //faire le ragdoll
+        m_agent.enabled = false;
+
+        // Activer la physique
+        rb.isKinematic = false;
+
+        iglooBehavior.PinguinDied(this.gameObject);
+
+        // Optionnel : désactiver collider si tu veux éviter bug
+        // col.enabled = false;
+
+        // Appliquer projection
+        Vector3 force = (hitDirection.normalized * deathForce) + (Vector3.up * upwardForce);
+        rb.AddForce(force, ForceMode.Impulse);
+
+        // Rotation aléatoire pour effet dramatique
+        rb.AddTorque(Random.insideUnitSphere * 10f, ForceMode.Impulse);
+
+        // Détruire après 3 secondes
+        //Destroy(gameObject, 3f);
     }
 }
