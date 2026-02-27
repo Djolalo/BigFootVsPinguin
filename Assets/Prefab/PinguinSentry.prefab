@@ -76,6 +76,8 @@ MonoBehaviour:
   range_of_detection: 50.3
   bipolarTime: 5
   range_of_diseaperance: 4
+  deathForce: 15
+  upwardForce: 8
 --- !u!195 &-109539748528314407
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -106,7 +108,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974979247457184002}
   serializedVersion: 4
-  m_Mass: 0.75
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

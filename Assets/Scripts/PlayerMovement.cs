@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private GameObject coneAttack;
     [SerializeField] private GameObject jumpAttack; 
+    [SerializeField] private GameObject attackZone;
     private CharacterController controller;
     private GameObject cam;
     private Vector2 moveInput;
@@ -87,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
     void OnAttack(InputValue inputVal)
     {
         animator.SetTrigger("attack");
-        canAttack = false; 
+        //canAttack = false; 
         
     }
 
@@ -117,31 +118,17 @@ public class PlayerMovement : MonoBehaviour
             DeadPlayer();
         }
     }
-
-    public void OnAnimationFinished(string animationName)
-{
-    if (animationName == "Attack")
+    /*
+    public void ActivateHitbox()
     {
-        Debug.Log("Attack animation finished");
-        canAttack = true;
-        Transform start = GameObject.FindWithTag("RightHand").transform;
-        GameObject attack = (GameObject)Instantiate(coneAttack, start); 
-        attack.transform.LookAt(this.cam.transform.forward); 
-
+        attackZone.SetActive(true);
     }
-    //L'objet n'est pas visible instantié, vérifier dans la hiérarchie. 
-    else if (animationName == "Jump")
+
+    public void DeactivateHitbox()
     {
-        Debug.Log("Jumped");
-        isGrounded = true;
-        Transform start = GameObject.FindWithTag("RightHand").transform;
-        GameObject attack = (GameObject)Instantiate(jumpAttack, start); 
-        attack.transform.LookAt(this.cam.transform.forward); 
-
+        attackZone.SetActive(false);
     }
-    
-}
-
+    */
     private void DeadPlayer()
     {
         IsDead = true;

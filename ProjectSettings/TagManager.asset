@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pinguin
   - RightHand
+  - Igloo
   layers:
   - Default
   - TransparentFX
