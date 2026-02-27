@@ -316,20 +316,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &246894855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 246894852}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f79f81679ab7f4537b0961a84b540f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 5
 --- !u!114 &246894856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,8 +337,8 @@ MonoBehaviour:
   attack_range: 2
   MaxHP: 100
   animator: {fileID: 246894854}
-  WaveAttack: {fileID: 0}
-  ConeAttack: {fileID: 0}
+  coneAttack: {fileID: 1732077632245742077, guid: 1b6f3f8e46e9e22cd8f3c2fb39d1f1bd, type: 3}
+  jumpAttack: {fileID: 6450431753171484817, guid: f3e3e2ca068454a12b8cf44cde6af97e, type: 3}
 --- !u!114 &246894857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,6 +568,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2715566404302941441, guid: e41770f3cb79c49e9bf6299504025045, type: 3}
+      propertyPath: m_TagString
+      value: RightHand
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -592,9 +582,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e41770f3cb79c49e9bf6299504025045, type: 3}
       insertIndex: -1
       addedObject: {fileID: 246894854}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e41770f3cb79c49e9bf6299504025045, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 246894855}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e41770f3cb79c49e9bf6299504025045, type: 3}
       insertIndex: -1
       addedObject: {fileID: 246894858}
@@ -1132,18 +1119,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1317231958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &752938123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &752938124
 Transform:
   m_ObjectHideFlags: 0
@@ -1183,7 +1158,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 752938124}
-  - component: {fileID: 752938123}
   - component: {fileID: 963194227}
   m_Layer: 0
   m_Name: Camera

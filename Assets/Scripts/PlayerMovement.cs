@@ -18,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Miscellaneous")]
     [SerializeField] private Animator animator;
 
-
+    [SerializeField] private GameObject coneAttack;
+    [SerializeField] private GameObject jumpAttack; 
     private CharacterController controller;
     private GameObject cam;
     private Vector2 moveInput;
@@ -26,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalRotation = 0f;
     private Vector3 playerVelocity;
     private bool isGrounded;
+
+    private bool canAttack = true; 
 
     void Start()
     {
@@ -68,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetTrigger("jump");
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            isGrounded = false; 
         }
         
     }
@@ -83,7 +87,8 @@ public class PlayerMovement : MonoBehaviour
     void OnAttack(InputValue inputVal)
     {
         animator.SetTrigger("attack");
-        //si les pinguins sont à la portées d'attaque du yeti, les tuers.
+        canAttack = false; 
+        
     }
 
     private void MovePlayer()
@@ -112,6 +117,30 @@ public class PlayerMovement : MonoBehaviour
             DeadPlayer();
         }
     }
+
+    public void OnAnimationFinished(string animationName)
+{
+    if (animationName == "Attack")
+    {
+        Debug.Log("Attack animation finished");
+        canAttack = true;
+        Transform start = GameObject.FindWithTag("RightHand").transform;
+        GameObject attack = (GameObject)Instantiate(coneAttack, start); 
+        attack.transform.LookAt(this.cam.transform.forward); 
+
+    }
+    //L'objet n'est pas visible instantié, vérifier dans la hiérarchie. 
+    else if (animationName == "Jump")
+    {
+        Debug.Log("Jumped");
+        isGrounded = true;
+        Transform start = GameObject.FindWithTag("RightHand").transform;
+        GameObject attack = (GameObject)Instantiate(jumpAttack, start); 
+        attack.transform.LookAt(this.cam.transform.forward); 
+
+    }
+    
+}
 
     private void DeadPlayer()
     {
